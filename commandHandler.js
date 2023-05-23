@@ -1,18 +1,28 @@
+const fs = require("fs");
 class commandHandler {
 
     constructor(interaction) {
         this.interaction = interaction;
         var userData = JSON.parse(fs.readFileSync("./userData.json"));
-        if (userData.includes(user => user.id === this.interaction.user.id)) {
-            if (userData.includes(user => user.id === this.interaction.options.filter(option => { return option.name === 'user' })[0].user.id)) {
-                this.handleCommand();
+        if (userData.map(user => user.id).includes(this.interaction.user.id) || this.interaction.commandName === 'riseandgrind') {
+            if (this.interaction.options.length) {
+                if (userData.map(user => user.id).includes(this.interaction.options.getUser('user').id)) {
+
+                    this.handleCommand();
+
+                }
+                else {
+                    this.interaction.reply({ content: `<@${this.interaction.options.getUser('user').id}> hasn't risen and grinded yet!`, ephemeral: true });
+                }
             }
             else {
-                this.interaction.reply({ content: `<@${this.interaction.options.filter(option => { return option.name === 'user' })[0].user.id}> hasn't risen and grinded yet!`, ephemeral: true });
+
+                this.handleCommand();
+
             }
         }
         else {
-            this.interaction.reply({content: `You haven't risen and grinded yet!`, ephemeral: true});
+            this.interaction.reply({ content: `You haven't risen and grinded yet!`, ephemeral: true });
         }
     }
     handleCommand() {

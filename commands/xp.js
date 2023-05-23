@@ -1,3 +1,4 @@
+const fs = require("fs");
 class xp {
 
     constructor(interaction) {
@@ -7,14 +8,14 @@ class xp {
     }
 
     execute() {
-        if (!this.userData.map(user => user.id).includes(this.interaction.user.id)) {
+        if (!this.interaction.options.getUser('user')) {
             var xp = this.userData.filter(user => user.id === this.interaction.user.id)[0].xp;
-            this.interaction.reply(`You have ${xp} xp🤑`);
+            this.interaction.reply({content: `You have ${xp} xp 🤑`, ephemeral: false});
         }
         else {
-            var userId = this.interaction.options.filter(option => { return option.name === 'user' })[0].user.id;
+            var userId = this.interaction.options.getUser('user').id;
             var xp = this.userData.filter(user => user.id === userId)[0].xp;
-            this.interaction.reply(`<@${userId}> has ${xp} xp🤑`);
+            this.interaction.reply({content: `<@${userId}> has ${xp} xp 🤑`, ephemeral: false});
         }
     }
 }

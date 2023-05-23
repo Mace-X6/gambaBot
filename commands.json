@@ -23,6 +23,19 @@
         ]
     },
     {
+        "name": "xp",
+        "type": 1,
+        "description": "Check a users xp",
+        "options": [
+            {
+                "name": "user",
+                "description": "The user to check the xp of",
+                "type": 6,
+                "required": false
+            }
+        ]
+    },
+    {
         "name": "give",
         "type": 1,
         "description": "Give a user some money",
@@ -38,19 +51,6 @@
                 "description": "The amount of money to give",
                 "type": 4,
                 "required": true
-            }
-        ]
-    },
-    {
-        "name": "xp",
-        "type": 1,
-        "description": "Check a users xp",
-        "options": [
-            {
-                "name": "user",
-                "description": "The user to check the xp of",
-                "type": 6,
-                "required": false
             }
         ]
     },

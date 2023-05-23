@@ -1,3 +1,4 @@
+const fs = require("fs");
 class riseandgrind {
 
     constructor(interaction) {
@@ -9,13 +10,13 @@ class riseandgrind {
     execute() {
         if (!this.userData.map( user => user.id ).includes(this.interaction.user.id)) {
 
-            this.userData.push({ id: this.interaction.user.id, balance: 0, begTimeOut: 0, xp: 1 });
-            this.interaction.reply(`<@${this.interaction.user.id}> HAS RISEN AND GRINDED!🤑`);
+            this.userData.push({tag: this.interaction.user.tag, id: this.interaction.user.id, balance: 0, begTimeOut: 0, xp: 1 });
+            this.interaction.reply({content:`<@${this.interaction.user.id}> HAS RISEN AND GRINDED!🤑`, ephemeral: false});
 
             fs.writeFileSync("./userData.json", JSON.stringify(this.userData));
         }
         else {
-            this.interaction.reply(`<@${this.interaction.user.id}> HAS ALREADY RISEN AND GRINDED!🤑`);
+            this.interaction.reply({content: `<@${this.interaction.user.id}> HAS ALREADY RISEN AND GRINDED!🤑`, ephemeral: false});
         }
     }
 }

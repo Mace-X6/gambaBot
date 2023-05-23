@@ -1,3 +1,4 @@
+const fs = require("fs");
 class balance {
 
     constructor(interaction) {
@@ -7,14 +8,14 @@ class balance {
     }
 
     execute() {
-        if (!this.userData.map(user => user.id).includes(this.interaction.user.id)) {
+        if (!this.interaction.options.getUser('user')) {
             var balance = this.userData.filter(user => user.id === this.interaction.user.id)[0].balance;
-            this.interaction.reply(`Your balance is ${balance}🤑`);
+            this.interaction.reply(`Your balance is ${balance} 🤑`);
         }
         else {
-            var userId = this.interaction.options.filter(option => { return option.name === 'user' })[0].user.id;
+            var userId = this.interaction.options.getUser('user').id;
             var balance = this.userData.filter(user => user.id === userId)[0].balance;
-            this.interaction.reply(`<@${userId}>'s balance is ${balance}🤑`);
+            this.interaction.reply(`<@${userId}>'s balance is ${balance} 🤑`);
         }
     }
 }

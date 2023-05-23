@@ -1,3 +1,4 @@
+const fs = require("fs");
 class give {
     constructor(interaction) {
         this.interaction = interaction;
@@ -5,17 +6,22 @@ class give {
         this.execute();
     }
     execute() {
-        var user = this.interaction.options.filter(option => { return option.name === 'user' })
-        var amount = this.interaction.options.filter(option => { return option.name === 'amount' })
-        if (userData.filter(user => user.id === this.interaction.user.id).balance >= amount) {
-            userData.filter(user => user.id === this.interaction.user.id).balance -= amount
-            userData.filter(user => user.id === user).balance += amount
-            this.interaction.reply(`<@${this.interaction.user.id}> gave ${amount} to <@${user.id}>`)
+        if (this.interaction.options.getInteger('amount') > 0) {
+            var targetUser = this.interaction.options.getUser('user');
+            var amount = this.interaction.options.getInteger('amount');
+            if (this.userData.filter(user => user.id === this.interaction.user.id)[0].balance >= amount) {
+                this.userData.filter(user => user.id === this.interaction.user.id)[0].balance -= amount
+                this.userData.filter(user => user.id === targetUser.id)[0].balance += amount
+                this.interaction.reply(`<@${this.interaction.user.id}> gave ${amount} 🤑 to <@${targetUser.id}>`)
+            }
+            else {
+                this.interaction.reply(`You too poor to give that much!`)
+            }
+            fs.writeFileSync("./userData.json", JSON.stringify(this.userData));
         }
         else {
-            this.interaction.reply(`You too poor to give that much!`)
+            this.interaction.reply({ content: `You need to specify a valid amount! (amount > 0)`, ephemeral: true });
         }
-        fs.writeFileSync("./userData.json", JSON.stringify(this.userData));
     }
 }
 module.exports = give;
