@@ -1,10 +1,5 @@
-const fs = require("fs");
-class give {
-    constructor(interaction) {
-        this.interaction = interaction;
-        this.userData = JSON.parse(fs.readFileSync("./userData.json"));
-        this.execute();
-    }
+class give extends SlashCommand {
+
     execute() {
         if (this.interaction.options.getInteger('amount') > 0) {
             var targetUser = this.interaction.options.getUser('user');

@@ -1,5 +1,7 @@
-const fs = require("fs");
-class commandHandler {
+class CommandHandler {
+
+    private interaction: any;
+    private userData: Array<User>;
 
     constructor(interaction) {
         this.interaction = interaction;
@@ -30,4 +32,4 @@ class commandHandler {
         new command(this.interaction);
     }
 }
-module.exports = commandHandler;
+module.exports = CommandHandler;

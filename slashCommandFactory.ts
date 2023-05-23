@@ -1,15 +1,15 @@
-
 const {
     REST
 } = require('@discordjs/rest');
 const {
     Routes
 } = require('discord-api-types/v9');
-const Discord = require("discord.js");
-const { token } = require("./config.json");
-const fs = require("fs");
 
-class slashCommandFactory {
+class SlashCommandFactory {
+
+    private client: any;
+    private guildId: string | boolean;
+    private commands: Array<Object>;
 
     constructor(client, guildId = false) {
         this.client = client;
@@ -38,4 +38,4 @@ class slashCommandFactory {
 
 }
 
-module.exports = slashCommandFactory;
+module.exports = SlashCommandFactory;

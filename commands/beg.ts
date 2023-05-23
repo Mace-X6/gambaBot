@@ -1,22 +1,16 @@
-const fs = require("fs");
-class beg {
-    constructor(interaction) {
-        this.interaction = interaction;
-        this.userData = JSON.parse(fs.readFileSync("./userData.json"));
-        this.execute();
-    }
+class beg extends SlashCommand {
 
     execute() {
         if (this.userData.filter(user => user.id === this.interaction.user.id)[0].begTimeOut <= Date.now()) {
             var amount = Math.floor(Math.random() * (this.userData.filter(user => user.id === this.interaction.user.id)[0].xp / 100) + 1);
             this.userData.filter(user => user.id === this.interaction.user.id)[0].balance += amount;
-            this.userData.filter(user => user.id === this.interaction.user.id)[0].begTimeOut = Date.now() + 3*10**5;
+            this.userData.filter(user => user.id === this.interaction.user.id)[0].begTimeOut = Date.now() + 3 * 10 ** 5;
             this.interaction.reply(`<@${this.interaction.user.id}> begged and got ${amount} 🤑`);
             fs.writeFileSync("./userData.json", JSON.stringify(this.userData));
         }
         else {
             var timeLeft = this.userData.filter(user => user.id === this.interaction.user.id)[0].begTimeOut - Date.now();
-            this.interaction.reply({ content: `You have to wait ${this.timeToString(timeLeft)} before you can beg again!`, ephemeral: true});
+            this.interaction.reply({ content: `You have to wait ${this.timeToString(timeLeft)} before you can beg again!`, ephemeral: true });
         }
     }
 

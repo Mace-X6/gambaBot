@@ -8,20 +8,24 @@ const client = new Discord.Client({
 const slashCommandFactory = require('./slashCommandFactory.js');
 const commandHandler = require('./commandHandler');
 
+interface User {
+    tag: string,
+    id: string,
+    xp: number,
+    balance: number,
+    begTimeOut: number    
+}
+
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
     checkArgs();
 
     async function checkArgs() {
-        if (myArgs.includes('refreshCommands') && myArgs.includes('guild')) {
-            new slashCommandFactory(client, '512952764431859713');
-        }
-        else if (myArgs.includes('refreshCommands')) {
-            new slashCommandFactory(client);
+        if (myArgs.includes('refreshCommands')) {
+            new SlashCommandFactory(client);
         }
         else if (myArgs.includes('help')) {
             console.log('refreshCommands: refreshes commands');
-            console.log('refreshCommands guild: refreshes commands for a specific guild');
         }
     }
 });
@@ -32,9 +36,9 @@ client.on('messageCreate', (message) => {
 });
 
 client.on('interactionCreate', async (interaction) => {
-    commands = JSON.parse(fs.readFileSync("./commands.json")).map(command => { return command.name });
+    var commands = JSON.parse(fs.readFileSync("./commands.json")).map(command => { return command.name });
     if (!interaction.isCommand() || !commands.includes(interaction.commandName)) return;
-    new commandHandler(interaction);
+    new CommandHandler(interaction);
 });
 
 client.login(token);

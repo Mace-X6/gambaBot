@@ -1,11 +1,4 @@
-const fs = require("fs");
-class xp {
-
-    constructor(interaction) {
-        this.interaction = interaction;
-        this.userData = JSON.parse(fs.readFileSync("./userData.json"));
-        this.execute();
-    }
+class xp extends SlashCommand {
 
     execute() {
         if (!this.interaction.options.getUser('user')) {
