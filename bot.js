@@ -27,15 +27,14 @@ client.on('ready', () => {
 });
 
 client.on('messageCreate', (message) => {
-
+    if (message.author.bot) return;
+    message.content.includes('🤑') || message.content.includes('💰') || message.content.includes('💸') ? message.reply('🤑'.repeat(Math.random() * 100)) : null;
 });
 
 client.on('interactionCreate', async (interaction) => {
-    commands = JSON.parse(fs.readFileSync("./commands.json")).map(command => {return command.name});
+    commands = JSON.parse(fs.readFileSync("./commands.json")).map(command => { return command.name });
     if (!interaction.isCommand() || !commands.includes(interaction.commandName)) return;
-
     new commandHandler(interaction);
-
 });
 
 client.login(token);
