@@ -3,5 +3,60 @@
         "name": "ping",
         "type": 1,
         "description": "Ping the bot"
+    },
+    {
+        "name": "riseandgrind",
+        "type": 1,
+        "description": "Register your user to the bot"
+    },
+    {
+        "name": "balance",
+        "type": 1,
+        "description": "Check a users balance",
+        "options": [
+            {
+                "name": "user",
+                "description": "The user to check the balance of",
+                "type": 6,
+                "required": false
+            }
+        ]
+    },
+    {
+        "name": "give",
+        "type": 1,
+        "description": "Give a user some money",
+        "options": [
+            {
+                "name": "user",
+                "description": "The user to give money to",
+                "type": 6,
+                "required": true
+            },
+            {
+                "name": "amount",
+                "description": "The amount of money to give",
+                "type": 4,
+                "required": true
+            }
+        ]
+    },
+    {
+        "name": "xp",
+        "type": 1,
+        "description": "Check a users xp",
+        "options": [
+            {
+                "name": "user",
+                "description": "The user to check the xp of",
+                "type": 6,
+                "required": false
+            }
+        ]
+    },
+    {
+        "name": "beg",
+        "type": 1,
+        "description": "Beg for money"
     }
 ]
