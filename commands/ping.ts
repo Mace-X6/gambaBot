@@ -1,7 +1,8 @@
+import { SlashCommand } from "../slashCommand";
 class ping extends SlashCommand{
 
     execute() {
-        this.interaction.reply('Pong!');
+        this.interaction.followUp('Pong!');
     }
 }
 module.exports = ping;

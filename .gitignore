@@ -36,5 +36,6 @@ userData.json
 package-lock.json
 package.json
 node_modules/
+*.js
 
 

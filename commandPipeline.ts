@@ -1,14 +1,16 @@
-class CommandHandler {
-
+class CommandPipeline {
+    
     private interaction: any;
     private userData: Array<User>;
-
-    constructor(interaction) {
+    
+    constructor(interaction: any) {
+        const fs = require('fs');
         this.interaction = interaction;
-        var userData = JSON.parse(fs.readFileSync("./userData.json"));
-        if (userData.map(user => user.id).includes(this.interaction.user.id) || this.interaction.commandName === 'riseandgrind') {
+        this.userData = JSON.parse(fs.readFileSync("./userData.json"));
+
+        if (this.userData.map(user => user.id).includes(this.interaction.user.id) || this.interaction.commandName === 'riseandgrind') {
             if (this.interaction.options.length) {
-                if (userData.map(user => user.id).includes(this.interaction.options.getUser('user').id)) {
+                if (this.userData.map(user => user.id).includes(this.interaction.options.getUser('user').id)) {
 
                     this.handleCommand();
 
@@ -29,7 +31,7 @@ class CommandHandler {
     }
     handleCommand() {
         var command = require(`./commands/${this.interaction.commandName}.js`);
-        new command(this.interaction);
+        new command(this.interaction, this.userData);
     }
 }
-module.exports = CommandHandler;
+module.exports = CommandPipeline;

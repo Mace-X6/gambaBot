@@ -11,7 +11,7 @@ class SlashCommandFactory {
     private guildId: string | boolean;
     private commands: Array<Object>;
 
-    constructor(client, guildId = false) {
+    constructor(client: any, guildId = false) {
         this.client = client;
         this.guildId = guildId;
         this.commands = JSON.parse(fs.readFileSync("./commands.json"));

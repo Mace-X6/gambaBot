@@ -1,10 +1,10 @@
-abstract class SlashCommand {
+export abstract class SlashCommand {
     
     protected interaction: any;
     protected userData: Array<User>;
-    constructor(interaction) {
+    constructor(interaction: any, userData: Array<User>) {
         this.interaction = interaction;
-        this.userData = JSON.parse(fs.readFileSync("./userData.json"));
+        this.userData = userData;
         this.execute();
     }
     abstract execute(): void;
