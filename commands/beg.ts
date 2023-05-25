@@ -2,11 +2,12 @@ import { SlashCommand } from "../slashCommand";
 class beg extends SlashCommand {
 
     execute() {
+        const fs = require('fs');
         if (this.userData.filter(user => user.id === this.interaction.user.id)[0].begTimeOut <= Date.now()) {
-            var amount = Math.floor(Math.random() * (this.userData.filter(user => user.id === this.interaction.user.id)[0].xp / 100) + 1);
+            var amount = Math.floor(Math.random() * (this.userData.filter(user => user.id === this.interaction.user.id)[0].xp / 10000) + 1);
             this.userData.filter(user => user.id === this.interaction.user.id)[0].balance += amount;
             this.userData.filter(user => user.id === this.interaction.user.id)[0].begTimeOut = Date.now() + 3 * 10 ** 5;
-            this.interaction.followUp({ embeds: this.generateEmbed(amount) });
+            this.interaction.followUp({ embeds: [this.generateEmbed(amount)], ephemeral: false });
             fs.writeFileSync("./userData.json", JSON.stringify(this.userData));
         }
         else {
@@ -23,16 +24,10 @@ class beg extends SlashCommand {
 
     private generateEmbed(begAmt: number): object {
         return {
-            embeds: [
-                {
-                    title: `<@${this.interaction.user.id}> begged and got ${begAmt} 🤑`,
+                    title: `${this.interaction.user.tag} begged and got ${begAmt} 🤑`,
+                    description: `_cheap fuck_`,
                     color: 0x00ff00,
-                    timestamp: new Date(),
-                    thumbnail: {
-                        url: this.interaction.user.avatarURL()
-                    },
-                }
-            ]
+                    timestamp: new Date()
         }
     }
 }

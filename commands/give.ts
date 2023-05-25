@@ -5,7 +5,7 @@ class give extends SlashCommand {
         const fs = require('fs');
         if (this.interaction.options.getInteger('amount') > 0) {
             var targetUser = this.interaction.options.getUser('user');
-            var amount = this.interaction.options.getInteger('amount');
+            let amount: number = this.getAmount(this.interaction.options.getString('amount'), this.interaction.user.id);
             if (this.userData.filter(user => user.id === this.interaction.user.id)[0].balance >= amount) {
                 this.userData.filter(user => user.id === this.interaction.user.id)[0].balance -= amount
                 this.userData.filter(user => user.id === targetUser.id)[0].balance += amount

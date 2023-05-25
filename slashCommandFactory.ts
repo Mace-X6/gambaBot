@@ -8,32 +8,25 @@ const {
 class SlashCommandFactory {
 
     private client: any;
-    private guildId: string | boolean;
     private commands: Array<Object>;
+    private fs: any;
+    private token: string;
 
-    constructor(client: any, guildId = false) {
+    constructor(client: any) {
+        this.fs = require('fs');
+        this.token = require('./config.json').token;
         this.client = client;
-        this.guildId = guildId;
-        this.commands = JSON.parse(fs.readFileSync("./commands.json"));
+        this.commands = JSON.parse(this.fs.readFileSync("./commands.json"));
         this.refreshCommands();
     }
 
     async refreshCommands() {
-        const rest = new REST({ version: '9' }).setToken(token);
+        const rest = new REST({ version: '9' }).setToken(this.token);
 
-
-        if (this.guildId) {
             await rest.put(
-                Routes.applicationCommands(this.client.user.id, this.guildId),
+                Routes.applicationCommands(this.client.user.id, "123455676479"),
                 { body: this.commands }
             );
-        }
-        else {
-            await rest.put(
-                Routes.applicationCommands(this.client.user.id),
-                { body: this.commands }
-            );
-        }
     }
 
 }

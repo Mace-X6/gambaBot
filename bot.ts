@@ -22,6 +22,7 @@ client.on('ready', () => {
 
     async function checkArgs() {
         if (myArgs.includes('refreshCommands')) {
+            console.log("refreshing commands...");
             new slashCommandFactory(client);
         }
         else if (myArgs.includes('help')) {

@@ -49,7 +49,7 @@
             {
                 "name": "amount",
                 "description": "The amount of money to give",
-                "type": 4,
+                "type": 3,
                 "required": true
             }
         ]
@@ -58,5 +58,37 @@
         "name": "beg",
         "type": 1,
         "description": "Beg for money"
+    },
+    {
+        "name": "dice",
+        "type": 1,
+        "description": "Play a game of dice, if you win you get 5x your bet, if you lose you lose your bet",
+        "options": [
+            {
+                "name": "bet",
+                "description": "The amount of money you want to bet (supports all/half/quarter)",
+                "type": 3,
+                "required": true
+            }
+        ]
+    },
+    {
+        "name": "coinflip",
+        "type": 1,
+        "description": "Play a game of coinflip, if you win you get 2x your bet, if you lose you lose your bet",
+        "options": [
+            {
+                "name": "bet",
+                "description": "The amount of money you want to bet (supports all/half/quarter)",
+                "type": 3,
+                "required": true
+            },
+            {
+                "name": "side",
+                "description": "The side you want to bet on",
+                "type": 3,
+                "required": true
+            }
+        ]
     }
 ]
