@@ -5,7 +5,7 @@ class coinflip extends SlashCommand {
         const fs = require('fs');
         let user: any = this.userData.filter(user => user.id === this.interaction.user.id)[0];
         let bet: number = this.getAmount(this.interaction.options.getString('bet'), user);
-        let sideBetOn: number = this.interaction.options.getString('side') === ('heads' || 'h') && this.interaction.options.getString('side') != ('tails' || 't')  ? 0 : 1;
+        let sideBetOn: number = this.interaction.options.getString('side') === ('heads' || 'h') && this.interaction.options.getString('side') != ('tails' || 't') ? 0 : 1;
 
         if (user.balance >= bet) {
             let flip: number = Math.floor(Math.random() * 2);
@@ -20,6 +20,9 @@ class coinflip extends SlashCommand {
                 this.interaction.followUp({ embeds: [this.generateEmbed(bet, false, user.balance, flip)], empherial: false })
             }
             fs.writeFileSync("./userData.json", JSON.stringify(this.userData));
+        }
+        else {
+            this.interaction.followUp({ content: `You too poor to bet that much!`, ephemeral: true });
         }
     }
 

@@ -11,7 +11,8 @@ export abstract class SlashCommand {
 
     protected getAmount(number: string, user: any): number {
         let out: number = 0;
-        console.log(number)
+        number = number.toLowerCase().replace(/ /g, '').replace(/,/g, '');
+
         switch (number) {
             case 'all':
                 out = user.balance;
@@ -23,24 +24,28 @@ export abstract class SlashCommand {
                 out = Math.floor(user.balance / 4);
                 break;
             default:
-                if (RegExp('^\d+(?:[kmb])?$').test(number)) {
+                if (number.includes('k') || number.includes('m') || number.includes('b')) {
                     switch (number.slice(-1)) {
                         case 'k':
-                            out = parseInt(number.slice(0, -1)) * 1000;
+                            out = parseInt(number.slice(0, -1)) * 10**3;
                             break;
                         case 'm':
-                            out = parseInt(number.slice(0, -1)) * 1000000;
+                            out = parseInt(number.slice(0, -1)) * 10**6;
                             break;
                         case 'b':
-                            out = parseInt(number.slice(0, -1)) * 1000000000;
+                            out = parseInt(number.slice(0, -1)) * 10**9;
                             break;
                         default:
                             out = parseInt(number);
                             break;
                     }
                 }
-                else if (RegExp('^-?\d+$').test(number)) {
+                //check if number only contains numbers
+                else if (number.match(/^[0-9]+$/)) {
                     out = parseInt(number);
+                }
+                else {
+                    out = 0;
                 }
                 break;
         }

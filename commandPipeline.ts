@@ -16,7 +16,7 @@ class CommandPipeline {
 
                 }
                 else {
-                    this.interaction.reply({ content: `<@${this.interaction.options.getUser('user').id}> hasn't risen and grinded yet!`, ephemeral: true });
+                    this.interaction.followUp({ content: `<@${this.interaction.options.getUser('user').id}> hasn't risen and grinded yet!`, ephemeral: true });
                 }
             }
             else {
@@ -26,7 +26,7 @@ class CommandPipeline {
             }
         }
         else {
-            this.interaction.reply({ content: `You haven't risen and grinded yet!`, ephemeral: true });
+            this.interaction.followUp({ content: `You haven't risen and grinded yet!`, ephemeral: true });
         }
     }
     handleCommand() {
