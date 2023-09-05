@@ -1,16 +1,17 @@
+import { get } from "http";
 import { SlashCommand } from "../slashCommand";
 class give extends SlashCommand {
 
     execute() {
         const fs = require('fs');
-        if (this.interaction.options.getInteger('amount') > 0) {
+        let amount: number = this.getAmount(this.interaction.options.getString('amount'), this.interaction.user.id);
+        if (amount > 0) {
             var targetUser = this.interaction.options.getUser('user');
-            let amount: number = this.getAmount(this.interaction.options.getString('amount'), this.interaction.user.id);
             if (this.userData.filter(user => user.id === this.interaction.user.id)[0].balance >= amount) {
                 this.userData.filter(user => user.id === this.interaction.user.id)[0].balance -= amount
                 this.userData.filter(user => user.id === targetUser.id)[0].balance += amount
+                fs.writeFileSync("../userData.json", JSON.stringify(this.userData));
                 this.interaction.followUp({ embeds: [this.generateEmbed(amount, this.interaction.user, targetUser)], ephemeral: false  })
-                fs.writeFileSync("./userData.json", JSON.stringify(this.userData));
             }
             else {
                 this.interaction.followUp({content: `You too poor to give that much!`, ephemeral: true})

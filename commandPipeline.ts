@@ -1,8 +1,8 @@
 class CommandPipeline {
-    
+
     private interaction: any;
     private userData: Array<User>;
-    
+
     constructor(interaction: any) {
         const fs = require('fs');
         this.interaction = interaction;
@@ -10,13 +10,15 @@ class CommandPipeline {
 
         if (this.userData.map(user => user.id).includes(this.interaction.user.id) || this.interaction.commandName === 'riseandgrind') {
             if (this.interaction.options.length) {
-                if (this.userData.map(user => user.id).includes(this.interaction.options.getUser('user').id)) {
+                if (this.interaction.options.getUser('user')) {
+                    if (this.userData.map(user => user.id).includes(this.interaction.options.getUser('user').id)) {
 
-                    this.handleCommand();
+                        this.handleCommand();
 
-                }
-                else {
-                    this.interaction.followUp({ content: `<@${this.interaction.options.getUser('user').id}> hasn't risen and grinded yet!`, ephemeral: true });
+                    }
+                    else {
+                        this.interaction.followUp({ content: `<@${this.interaction.options.getUser('user').id}> hasn't risen and grinded yet!`, ephemeral: true });
+                    }
                 }
             }
             else {
